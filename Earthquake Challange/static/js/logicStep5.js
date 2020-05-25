@@ -104,12 +104,12 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 	accessToken: API_KEY
 });
 
-// let light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-// attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
-// 	maxZoom: 18,
-// 	//id: 'mapbox.streets',
-// 	accessToken: API_KEY
-// });
+let light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+	maxZoom: 18,
+	//id: 'mapbox.streets',
+	accessToken: API_KEY
+});
 
 // // We create the dark view tile layer that will be an option for our map.
 // let dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -125,17 +125,16 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 // Create a base layer that holds both maps.
 let baseMaps = {
 	"Street": streets,
-	"Satellite" : satelliteStreets
+	"Satellite" : satelliteStreets,
+	"Light" : light
   };
 
   // Create the map object with center, zoom level and default layer.
 let map = L.map('mapid', {
 	center: [39.5, -98.5],
 	zoom: 3,
-	layers: [satelliteStreets]
+	layers: [streets]
 })
-
-
 
 
 // Retrieve the earthquake GeoJSON data.
@@ -202,13 +201,33 @@ function getRadius(magnitude) {
 	return magnitude * 4;
   }
 
+
+
+  let tectonicData = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
+
+
+
+  d3.json(tectonicData).then(function(data) {
+  
+  // Creating a GeoJSON layer with the retrieved data.
+  
+	  console.log(data);
+  L.geoJSON(data, {
+	  style: myStyle
+  }).addTo(tectonics);
+  });
+
+
+
 // Create the earthquake layer for our map.
 let earthquakes = new L.layerGroup();
+let tectonics = new L.layerGroup();
 
 // We define an object that contains the overlays.
 // This overlay will be visible all the time.
 let overlays = {
-	"Earthquakes": earthquakes
+	"Earthquakes": earthquakes,
+	"Tectonics" : tectonics
   };
 
 
@@ -247,7 +266,6 @@ for (var i = 0; i < magnitudes.length; i++) {
 
 legend.addTo(map);
   
-
 
 
 
@@ -292,11 +310,11 @@ legend.addTo(map);
 // }).addTo(map);
 // });
 
-// // Create a style for the lines.
-// let myStyle = {
-// 	color: "#ffffa1",
-// 	weight: 2
-// }
+// Create a style for the lines.
+let myStyle = {
+	color: "red",
+	weight: 2
+}
 
 
 // // Accessing the airport GeoJSON URL
