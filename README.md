@@ -2,9 +2,7 @@
 
 # RESOURCES
 
-Language : javascript, D3.js
-
-Sources: MapBox
+HTML, Javascript, CSS, GeoJSON, Leflet.js and MapBox
 
 ## Purpose
 The purpose of this project is to visually show the differences between the magnitudes of earthquakes all over the world for the last seven days.
