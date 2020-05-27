@@ -15,4 +15,4 @@ To complete this project, use a URL for GeoJSON earthquake data from the USGS we
 We created a map to showcase last 7 days of earthquakes and tectonic plates. We also created an overlay to toggle different types of maps and earthquake and tectonic data.
 
 
-![](/../Earthquake%20Challange/earthquakes_tectonics.png)
+![](earthquakes_tectonics.png)
